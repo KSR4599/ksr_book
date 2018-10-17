@@ -1,1 +1,24 @@
-<h1>Your Friend List:-</h1>
+<div align="center">
+  <h1>Your Friends List</h1>
+  {{# each user}}
+                <h4>
+                  {{this.friend_names}}
+                </h4>
+                  <br />
+                  <img src="../images/profilepics/{{this.friend_pics}}" class="img-responsive" width="180" height="200" alt="" />
+
+                  <br />  <br />
+                  <form action="#" method="post">
+                    <input type="text" name="username" value="{{this.friend_names}}" hidden="true" />
+
+                      {{#if this.friend_names}}
+                      <button type="submit" class="btn btn-warning">Chat</button>
+                  {{/if}}
+
+                    </form>
+                    <br />
+
+
+{{/each}}
+
+</div>

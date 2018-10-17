@@ -3,13 +3,17 @@
   <h1>Your Friend Requests</h1>
   {{#each output}}
   <div>
-    <img src="../images/profilepics/{{this.PicArray}}" width="180" height="200" />
+    <img src="../images/profilepics/{{this.PicArray}}" width="180" height="200" alt=""/>
     <br />
     <h3>{{this.RequestArray}}</h3>
 <form action="/api/acceptfriend" method="post">
   <input type="text" name="username" value="{{this.RequestArray}}" hidden="true" />
     <input type="text" name="userpic" value="{{this.PicArray}}" hidden="true" />
-  <button type="submit" class="btn btn-success">Accept</button>
+
+    {{#if this.RequestArray}}
+    <button type="submit" class="btn btn-success">Accept</button>
+{{/if}}
+
   </form>
   <br />  <br />
     {{/each}}

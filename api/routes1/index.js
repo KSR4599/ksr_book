@@ -32,7 +32,34 @@ router.get('/profile',function(req,res,next){
 //FRIENDS ROUTE
 router.get('/friends',function(req,res){
 
-  res.render('friends')
+var user = req.user;
+var id = user._id;
+User
+  .findById(id)
+  .select('social.friend_names')                        // User.find({_id: userId },{'library.story'}).then(function(user){
+  .exec(function(err,doc){
+    var response = {
+         status : 200,
+         message : []
+       };
+       if (err) {
+         console.log("Error finding service");
+         response.status = 500;
+         response.message = err;
+       } else if(!doc) {
+         console.log("User id not found in database", id);
+         response.status = 404;
+         response.message = {
+           "message" : "User ID not found " + id
+         };
+       } else {
+         response.message = doc.services ? doc.services : [];
+       }
+       console.log(user.social)
+       res
+         .status(response.status)
+         .render('friends',{frends:doc,user:user.social})
+});
 })
 
 

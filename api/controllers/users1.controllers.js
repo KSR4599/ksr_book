@@ -6,6 +6,62 @@ module.exports = router;
 var mongoose=require('mongoose');
 var User=mongoose.model('User')
 
+var addotherfriend = function(req, res,user){
+  var frname= req.body.username;
+  var user=req.user
+  User.findOne({name:frname}).exec(function(err,doc){
+    var fff= parseInt(doc.friends)
+    doc.friends =fff+1;
+      doc.save(function(err, docUpdated) {});
+  })
+
+  User
+   .findOne({name:frname})
+   .select('social')
+   .exec(function(err,doc){
+
+     doc.social.push({
+       friend_names:user.name,
+       friend_pics:user.profileimage
+     })
+
+     doc.save(function(err, docUpdated) {
+     if (err) {
+       res
+         .status(500)
+         .json(err);
+     } else {
+       console.log(docUpdated)
+    //====================================
+    User.find({name:user.name},'-_id',function(err, users) {
+      users=JSON.stringify(users);
+      User.aggregate([
+    {"$project":{
+      "array":{
+      "$map":{
+      "input":{"$range":[0,{"$size":"$social.friend_names"}]},
+      "as":"ix",
+      "in":{
+       "FriendArray":{"$arrayElemAt":["$social.friend_names","$$ix"]},
+       "PicArray":{"$arrayElemAt":["$social.friend_pics","$$ix"]}}
+    }
+  }
+}},
+{"$unwind":"$array"},
+{"$replaceRoot":{"newRoot":"$array"}}
+],function(err, output){
+  console.log(output);
+
+  res.render('friends',{output:output})
+})
+
+})
+//=========================================================
+     }
+   });
+   })
+}
+
 
 module.exports.friendAccept= function(req, res){
   var frname= req.body.username;
@@ -43,7 +99,8 @@ module.exports.friendAccept= function(req, res){
                       .status(500)
                       .json(err);
                   } else {
-                    res.render('friends')
+                    //res.render('friends')
+                    addotherfriend(req,res,user)
                   }
                 });
                 console.log(user)
