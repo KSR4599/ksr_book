@@ -1,0 +1,23 @@
+<div align="center">
+  <h1>People You may know</h1>
+
+
+
+  {{#each output}}
+  <div>
+    <img src="../images/profilepics/{{this.profileimage}}" width="180" height="200" />
+    <br />
+    <h2>Name:-</h2><h4>{{this.username}}</h4>
+    <form action="/api1/friendreq" method="post">
+      <input type="text" value={{this.username}} name="requser" hidden="true"/>
+        <button class="btn btn-primary" type="submit" style="display: inline;">Add as friend</button>
+    </form>
+
+  <br />  <br />
+    {{/each}}
+
+  </div>
+
+
+
+</div>

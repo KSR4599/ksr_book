@@ -1,0 +1,48 @@
+<html>
+
+<head>
+
+  </head>
+  <body>
+    <div align="center">
+
+
+    <form method="post" action="/api/register" enctype="multipart/form-data">
+      <div class="container">
+        <h1 class="sty" style="color:rgb(36, 94, 184);font-size:350%;">Register</h1>
+        <p class="sty">Please fill in this form to create an account.</p>
+        <hr>
+
+        <p class="sty"><b>Enter Name</b></p>
+        <input type="text" placeholder="Enter name" name="name" >
+
+        <p class="sty"><b>Email</b></p>
+        <input type="email" placeholder="Enter Email" name="email" >
+
+        <p class="sty"><b>Username</b></p>
+        <input type="text" placeholder="Enter Username" name="username" >
+        <p class="sty"><b>Password</b></p>
+        <input type="password" placeholder="Enter Password" name="password" >
+
+         <p class="sty"><b>Repeat-Password</b></p>
+        <input type="password" placeholder="Repeat Password" name="password2" >
+
+    <p class="text-danger">{{{errors}}}</p>
+
+        <p class="sty">Profile-Image</p>
+       <input type="file" class="btn btn-outline-warning" name="profileimage" />
+
+        <hr>
+        <p>By creating an account you agree to our <a href="#" class="cc">Terms & Privacy</a>.</p>
+
+        <button type="submit" class="btn btn-outline-success" name="submit" onclick="myF()">Register</button>
+      </div>
+
+      <div class="container signin">
+        <p class="sty">Already have an account? <a href="/api/login" class="cc">Sign in</a>.</p>
+      </div>
+    </form>
+    </div>
+
+    </body>
+    </html>
