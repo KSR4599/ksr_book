@@ -68,18 +68,49 @@ User
 //==================PEOPLE rendering============================
 router.get('/people',function(req,res){
 
+var user = req.user;
+var i=0,j=0,n=parseInt(user.friends);
 var usr = req.user.name;
-//extractng every user except the current user ( all the fields except the fiels mentiones with negation "-")
-User.find({ name: { $ne: usr }},'-_id -name -password -email -friends -social -__v',function(err, users) {
+var doc1 =user.social;
 
-    console.log(users);
+User.find({ name: { $ne: usr }},'-_id -name -password -email -friends -social -__v',function(err, doc) {
 
-      res.render('people',{output:users})
+console.log(n)
 
+var no =[];
+for(i=0;i<doc.length;i++){
+  var flag=0;
+  for(j=0;j<n;j++){
+  if((doc[i].username)==doc1[j].friend_names){
+    flag=1;
+  }
+}
+if(flag==0){
+  no.push(i)
+}
+}
+console.log(no.length)
+var picdox =[];
+var namedox =[];
 
-  })
+var docpics =[];
+for(i=0;i<no.length;i++){
+  var x =no[i]
+
+  console.log(doc[x].profileimage)
+  picdox.push(doc[x].profileimage)
+  console.log(doc[x].username)
+  namedox.push(doc[x].username)
+}
+console.log(namedox)
+console.log(picdox)
+var nu=3;
+res.render('sample',{name:namedox,pic:picdox,nu:nu})
+})
 
 })
+
+
 
 
   //======================END OF PEOPLE RENDERING====================

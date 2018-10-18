@@ -19,6 +19,7 @@ var asy = require("async");
 var routes = require('./api/routes')
 var routes1 = require('./api/routes1')
 const nodemailer = require('nodemailer')
+var socket = require('socket.io')
 
 
 //the middleware use() function of express for serving static files.

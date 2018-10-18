@@ -2,10 +2,10 @@
   <h1>People You may know</h1>
 
 
-
+<h1>{{output}}</h1>
   {{#each output}}
   <div>
-    <img src="../images/profilepics/{{this.profileimage}}" width="180" height="200" />
+    <img src="../images/profilepics/{{this.userpic}}" width="180" height="200" />
     <br />
     <h2>Name:-</h2><h4>{{this.username}}</h4>
     <form action="/api1/friendreq" method="post">
