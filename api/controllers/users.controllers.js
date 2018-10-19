@@ -5,8 +5,20 @@ var router = express.Router();
 module.exports = router;
 var mongoose=require('mongoose');
 var User=mongoose.model('User')
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+app.use(passport.initialize());
+app.use(passport.session());
+var cookieParser = require('cookie-parser')
+var session = require('express-session')
 
-
+//====================================
+//cookieParser
+app.use(cookieParser());
+// Init passport authentication
+app.use(passport.initialize());
+// persistent login sessions
+app.use(passport.session());
 
 //========================FRIEND REQ HANDLING=========================
 module.exports.friendReq = function(req, res){
@@ -32,7 +44,7 @@ User
        .json(err);
    } else {
      console.log(docUpdated)
-     res.render('index')
+     res.redirect('/api')
    }
  });
 })

@@ -5,6 +5,11 @@ var router = express.Router();
 module.exports = router;
 var mongoose=require('mongoose');
 var User=mongoose.model('User')
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 var addotherfriend = function(req, res,user){
   var frname= req.body.username;

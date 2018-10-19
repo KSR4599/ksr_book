@@ -1,11 +1,33 @@
+<style>
+.wrapper {
 
-  {{#each pic}}
+  display: inline-block;
+
+}
+</style>
+  <h1>People You may know:-</h1>
   <div>
+    {{#each pic}}
     <img src="../images/profilepics/{{this}}" width="180" height="200" />
-    {{/each}}
-    <br />
-      {{#each name}}
-    <h2>Name:-</h2><h4>{{this}}</h4>
+      {{/each}}
+  </div>
 
-  <br />  <br />
-    {{/each}}
+    <br />
+
+<div>
+
+  {{#each name}}
+
+<form action="/api1/friendreq" method="post">
+<input type="text" value={{this}} name="requser" hidden="true"/>
+
+<div class="wrapper">
+  <button  class="btn btn-primary" type="submit" title="{{this}}">
+  Add as friend
+  </button>
+</div>
+
+</form>
+{{/each}}
+
+</div>

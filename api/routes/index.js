@@ -3,6 +3,8 @@ var express = require('express');
 var app = express()
 var router = express.Router();
 module.exports = router;
+var cookieParser = require('cookie-parser')
+var session = require('express-session')
 var mongoose=require('mongoose');
 mongoose.set('useCreateIndex', true);
 const multer = require('multer');
@@ -14,6 +16,15 @@ const nodemailer = require('nodemailer')
 var User=mongoose.model('User')
 var ctrlUsers = require('../controllers/users.controllers.js');
 var ctrlUsers1 = require('../controllers/users1.controllers.js')
+
+//====================================
+//cookieParser
+app.use(cookieParser());
+// Init passport authentication
+app.use(passport.initialize());
+// persistent login sessions
+app.use(passport.session());
+
 
 
 //multer conf for profile pic

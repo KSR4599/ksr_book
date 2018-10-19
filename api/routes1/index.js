@@ -3,6 +3,8 @@ var express = require('express');
 var app = express()
 var router = express.Router();
 module.exports = router;
+var cookieParser = require('cookie-parser')
+var session = require('express-session')
 var mongoose=require('mongoose');
 mongoose.set('useCreateIndex', true);
 const multer = require('multer');
@@ -14,6 +16,16 @@ const nodemailer = require('nodemailer')
 var User=mongoose.model('User')
 var ctrlUsers = require('../controllers/users.controllers.js');
 var ctrlUsers1 = require('../controllers/users1.controllers.js')
+
+//====================================
+//cookieParser
+app.use(cookieParser());
+// Init passport authentication
+app.use(passport.initialize());
+// persistent login sessions
+app.use(passport.session());
+
+
 
 
 //LOGOUT ROUTE
@@ -132,12 +144,22 @@ router.post('/chat',function(req,res){
   var userid=user._id;
   var username=user.name;
   var frname = req.body.frname;
+    var frpic = req.body.frpic;
   User
    .findOne({name:frname})
    .exec(function(err,doc){
     var frid=doc._id;
-      res.render('chat',{userid:userid,username:username,frname:frname,frid:frid})
+      res.render('chat',{userid:userid,username:username,frname:frname,frid:frid,frpic:frpic})
    })
 
 
 })
+
+//=====================ESNURE AUTH=====================
+//ENSURE AUNTHENTICATION FUNCTION
+function ensureAuthenticated(req,res,next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.render("errorauth");
+}
