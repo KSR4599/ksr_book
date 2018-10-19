@@ -22,6 +22,7 @@ const nodemailer = require('nodemailer')
 var socket = require('socket.io')
 
 
+
 //the middleware use() function of express for serving static files.
 app.use(express.static(path.join(__dirname,'views')))
 app.get('/', function(req, res){
@@ -79,6 +80,7 @@ app.use(expressValidator({
 //setting the port
 app.set('port',3000)
 
+
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -104,4 +106,28 @@ app.use('/api1',routes1)
 var server = app.listen(app.get('port'),function(){
   var port = server.address().port;
   console.log('Express server listening on port ' + port)
+})
+
+var io = socket(server);
+io.on("connection",function(socket){
+  socket.on("attach_user_info",function(user_info){
+    socket.member_id = user_info.member_id;
+    socket.user_name=user_info.user_name;
+    //console.log("socket",socket);
+  })
+
+  socket.on("message_from_client",function(usr_msg){
+    var all_connected_clients =io.sockets.connected;
+    for(var socket_id in all_connected_clients){
+      if(all_connected_clients[socket_id].member_id===usr_msg.friend_member_id){
+        var message_object ={"msg":usr_msg.msg,"user_name":socket.user_name};
+        all_connected_clients[socket_id].emit("message_from_server",message_object);
+        break;
+      }
+    }
+  })
+
+
+
+
 })

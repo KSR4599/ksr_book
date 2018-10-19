@@ -8,8 +8,8 @@
                   <img src="../images/profilepics/{{this.friend_pics}}" class="img-responsive" width="180" height="200" alt="" />
 
                   <br />  <br />
-                  <form action="#" method="post">
-                    <input type="text" name="username" value="{{this.friend_names}}" hidden="true" />
+                  <form action="/api1/chat" method="post">
+                    <input type="text" name="frname" value="{{this.friend_names}}" hidden="true" />
 
                       {{#if this.friend_names}}
                       <button type="submit" class="btn btn-warning">Chat</button>

@@ -126,3 +126,18 @@ router
 
 
 //========================================================
+
+router.post('/chat',function(req,res){
+  var user = req.user;
+  var userid=user._id;
+  var username=user.name;
+  var frname = req.body.frname;
+  User
+   .findOne({name:frname})
+   .exec(function(err,doc){
+    var frid=doc._id;
+      res.render('chat',{userid:userid,username:username,frname:frname,frid:frid})
+   })
+
+
+})

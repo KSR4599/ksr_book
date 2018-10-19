@@ -1,0 +1,38 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
+<script src="../js/chat.js"></script>
+<script>
+var socket = io();
+socket.emit("attach_user_info",{"member_id": "{{{userid}}}" ,"user_name":"{{{username}}}" })
+
+socket.on("message_from_server",function(received_msg){
+  console.log("received_msg",received_msg)
+  var rec_msg = received_msg.msg;
+  console.log(rec_msg)
+  document.getElementById('chat_display').value+="{{frname}}"+":"+rec_msg;
+})
+
+var funcc = function(){
+
+var send_msg = document.getElementsByName('chat_content')[0].value;
+document.getElementById("chat_display").value+= "{{username}}"+":"+send_msg;
+socket.emit("message_from_client",{"msg":send_msg,"friend_member_id":"{{frid}}"});
+
+
+
+}
+</script>
+
+
+
+<div align="center">
+  <h1> Chat </h1>
+
+  <h3>Your Chat Window:-</h3>
+
+  <input style="height:400px;width:400px;font-size:14pt;" type="text" name="chat_display" id="chat_display"  />
+  <input style="height:200px;width:200px;font-size:14pt;" type="text" name="chat_content"  id="chat_content"/>
+  <button onclick="funcc()">Send</button>
+
+
+
+</div>
