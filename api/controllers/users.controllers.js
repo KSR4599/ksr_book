@@ -63,14 +63,10 @@ module.exports.friendReqshow = function(req, res){
     .find({ name:user.name})
     .select('social')
     .exec(function(err, doc) {
-
       //doc=doc.social
         console.log(doc);
       res.render('friendreqs',{doc:doc})
-
-
       })
-
       */
       User.find({},'-_id',function(err, users) {
         users=JSON.stringify(users);

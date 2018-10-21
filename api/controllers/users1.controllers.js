@@ -119,13 +119,11 @@ module.exports.friendAccept= function(req, res){
 
     /*
     var socialid = '5bc73e145d2a2d3808f3cd71';
-
     var thisSocial = user.social.id(socialid);
     thisSocial.friend_names = frname;
     thisSocial.friend_pics= frpic;
     thisSocial.friend_requests = undefined;
     thisSocial.friend_req_profilepic = undefined;
-
     user.save(function(err, user) {
       if (err) {
         res

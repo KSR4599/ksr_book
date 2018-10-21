@@ -154,6 +154,88 @@ router.post('/chat',function(req,res){
 
 
 })
+//======================UNFRIEND=========================================
+
+var delotherfriend = function(req, res,user){
+  var frname= req.body.frname;
+  var user=req.user
+      var i=0,j=100;
+
+  User.findOne({name:frname}).exec(function(err,doc){
+    var fff= parseInt(doc.friends);
+    doc.friends =fff-1;
+      doc.save(function(err, docUpdated) {});
+  })
+
+  User
+   .findOne({name:frname})
+   .select('social')
+   .exec(function(err,doc){
+
+
+
+     var doc = doc.social;
+          console.log(doc)
+
+          for(i=0;i<100;i++){
+            if(doc[i].friend_names==user.name){
+              console.log(doc[i].friend_names)
+              console.log(doc[i].friend_pics)
+                console.log(doc[i]._id)
+                var frn=doc[i].friend_names;
+                var frnid=doc[i]._id;
+              break;
+            }
+          }
+
+
+
+ console.log(doc)
+
+ User.findOne({name: frname}, function (err, result) {
+         result.social.id(frnid).remove();
+         result.save();
+     });
+res.render('index')
+})
+   };
+
+
+
+
+router.post('/unfriend',function(req,res){
+  var user=req.user;
+  var frname=req.body.frname;
+  var ff=parseInt(user.friends);
+  user.friends = ff-1;
+  user.save();
+    var i=0,j=100;
+
+    User
+     .findOne({name:user.name})
+     .select('social')
+     .exec(function(err, doc){
+       var doc = doc.social;
+            console.log(doc)
+
+            for(i=0;i<100;i++){
+              if(doc[i].friend_names==frname){
+                break;
+              }
+            }
+              var socialid =doc[i]._id;
+              User.findOne({name: user.name}, function (err, result) {
+                      result.social.id(socialid).remove();
+                      result.save();
+                  });
+                  console.log(user)
+                })
+                delotherfriend(req,res,user)
+})
+
+
+
+//====================================================================
 
 //=====================ESNURE AUTH=====================
 //ENSURE AUNTHENTICATION FUNCTION

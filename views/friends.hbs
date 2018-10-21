@@ -1,3 +1,4 @@
+
 <div align="center">
   <h1>Your Friends List</h1>
   {{# each user}}
@@ -16,6 +17,16 @@
                   {{/if}}
 
                     </form>
+
+                    <form action="/api1/unfriend" method="post">
+                      <input type="text" name="frname" value="{{this.friend_names}}" hidden="true" />
+                        {{#if this.friend_names}}
+                        <br />
+                        <button type="submit" class="btn btn-danger">Unfriend</button>
+                    {{/if}}
+
+                      </form>
+
                     <br />
 
 
