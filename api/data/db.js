@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var dburl = 'mongodb://localhost:27017/ksr_book';
+var dburl = 'mongodb://localhost:27017/techm';
 
 mongoose.connect(dburl,{ useNewUrlParser: true })
 
