@@ -97,6 +97,9 @@ app.set('view engine','hbs');
 app.use(bodyParser.urlencoded({ extended : false}))
 
 
+
+
+
 //if a request starting with /api occurs it searches automatically in the routes folder.
 app.use('/api',routes)
 app.use('/api1',routes1)
